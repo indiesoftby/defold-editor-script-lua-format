@@ -4,9 +4,11 @@
 
 ## Installation
 
-You can use this editor script in your own project by adding it as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your `game.project` file and in the dependencies field under project add:
+~~You can use this editor script in your own project by adding it as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your `game.project` file and in the dependencies field under project add:~~
 
-[https://github.com/indiesoftby/defold-editor-script-lua-format/archive/master.zip](https://github.com/indiesoftby/defold-editor-script-lua-format/archive/master.zip)
+~~[https://github.com/indiesoftby/defold-editor-script-lua-format/archive/master.zip](https://github.com/indiesoftby/defold-editor-script-lua-format/archive/master.zip)~~
+
+**The script will work if you simply copy paste the script folder into your project.**
 
 This script is accessible through the context menu in the asset view, it's context sensitive and will only show when you are clicking on the relevant file - `.lua`, `.script`, `.render_script` or `.editor_script`.
 
