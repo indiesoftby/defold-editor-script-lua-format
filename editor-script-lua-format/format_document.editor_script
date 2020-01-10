@@ -1,0 +1,63 @@
+local M = {}
+
+local function ends_with(str, ending)
+    return ending == "" or str:sub(-#ending) == ending
+end
+
+function M.get_commands()
+    return {
+        {
+            label = "Format Document",
+            locations = {"Edit", "Assets"},
+            query = {selection = {type = "resource", cardinality = "one"}},
+            active = function(opts)
+                local path = editor.get(opts.selection, "path")
+                return ends_with(path, ".lua") or ends_with(path, ".script") or
+                           ends_with(path, ".editor_script") or
+                           ends_with(path, ".render_script")
+            end,
+            run = function(opts)
+                local path = editor.get(opts.selection, "path")
+                path = path:sub(2)
+
+                if editor.platform == "x86_64-win32" then
+                    return {
+                        {
+                            action = "shell",
+                            command = {
+                                "cmd", "/C",
+                                "editor-script-lua-format\\bin\\win32\\lua-format.exe",
+                                "-i", path
+                            }
+                        }
+                    }
+                elseif editor.platform == "x86_64-darwin" then
+                    return {
+                        {
+                            action = "shell",
+                            command = {
+                                "./editor-script-lua-format/bin/darwin/lua-format",
+                                "-i", path
+                            }
+                        }
+                    }
+                elseif editor.platform == "x86_64-linux" then
+                    return {
+                        {
+                            action = "shell",
+                            command = {
+                                "./editor-script-lua-format/bin/linux/lua-format",
+                                "-i", path
+                            }
+                        }
+                    }
+                else
+                    print("ERROR: Not supported platform")
+                    return nil
+                end
+            end
+        }
+    }
+end
+
+return M
