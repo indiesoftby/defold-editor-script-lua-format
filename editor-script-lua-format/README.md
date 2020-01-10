@@ -1,22 +1,9 @@
-# Lua Code Formatter for Defold IDE
-
-[Defold IDE](https://www.defold.com) editor script that reformats your Lua source code. Uses [LuaFormatter](https://github.com/Koihik/LuaFormatter).
-
-## Installation
-
-You can use this editor script in your own project by adding it as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your `game.project` file and in the dependencies field under project add:
-
-[https://github.com/indiesoftby/defold-lua-format/archive/master.zip](https://github.com/indiesoftby/defold-lua-format/archive/master.zip)
-
-This script is accessible through the context menu in the asset view, it's context sensitive and will only show when you are clicking on the relevant file - `.lua`, `.script`, `.render_script` or `.editor_script`.
-
-## Style configure file
 
 Lua formatter will attempt to automatically use the root directory's `.lua-format` file. In case there's no file, it will fallback to the default configuration.
 
 See [this file](https://github.com/Koihik/LuaFormatter/blob/master/docs/Style-Config.md)
 
-### Default configuration
+## Default configuration
 
 ```
 column_limit: 80
@@ -49,7 +36,3 @@ single_quote_to_double_quote: false
 ## Limitations
 
 - Does not work when source file contains syntax error
-
-## License
-
-Apache 2 License.
