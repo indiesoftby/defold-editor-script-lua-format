@@ -1,0 +1,33 @@
+#!/bin/sh
+# Copy contents of this sample pre-commit hook to the custom pre-commit
+# $ cp ./editor-script-lua-format/git-hooks/pre-commit ./git/hooks/pre-commit
+# Make the pre-commit script executable (only on Linux and macOS)
+# $ chmod +x ./git/hooks/pre-commit
+
+# Check for lua-format executable
+BIN_PATH=./editor-script-lua-format/bin
+if [ "$(uname)" == "Darwin" ]; then
+    LUA_FORMAT=$BIN_PATH/darwin/lua-format
+    chmod +x $LUA_FORMAT
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    LUA_FORMAT=$BIN_PATH/linux/lua-format
+    chmod +x $LUA_FORMAT
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+    LUA_FORMAT=$BIN_PATH/win32/lua-format.exe
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
+    LUA_FORMAT=$BIN_PATH/win32/lua-format.exe
+fi
+
+$LUA_FORMAT -h >/dev/null 2>&1 || { echo >&2 "This hook requires 'lua-format'. Aborting."; exit 1; }
+
+# Find Lua files
+FILES=$(git diff --cached --name-only --diff-filter=ACMR "*.lua" "*.script" "*.editor_script" "*.render_script" | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+# Prettify all selected files
+echo "$FILES" | xargs $LUA_FORMAT -i
+
+# Add back the modified/prettified files to staging
+echo "$FILES" | xargs git add
+
+exit 0

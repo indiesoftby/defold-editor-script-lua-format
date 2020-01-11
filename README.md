@@ -14,13 +14,33 @@ This script is accessible through the context menu in the asset view, it's conte
 
 ![](example.png)
 
-## Style configure file
+## Git pre-commit hook
+
+Git has a way of firing off custom scripts that perform certain operations. These scripts are referred to as *hooks*. The hooks are all stored in the `hooks` subdirectory of the Git directory that's `.git/hooks`.
+
+*Note:* `.git/hooks` directory isn't cloned with the rest of your project, nor is it under version control.
+
+`editor-script-lua-format/git-hooks/pre-commit` contains a sample hook that applies a coding style with `lua-format` to staged files. It will help you format your code before you commit them. So when you try to commit your code, given script will run and format staged files.
+
+Copy contents of the sample pre-commit hook to the custom pre-commit:
+
+```bash
+$ cp ./editor-script-lua-format/git-hooks/pre-commit ./git/hooks/pre-commit
+```
+
+Make the pre-commit script executable (only on Linux and macOS):
+
+```bash
+$ chmod +x ./git/hooks/pre-commit
+```
+
+## Style configuration
 
 Lua formatter will attempt to automatically use the root directory's `.lua-format` file. In case there's no file, it will fallback to the default configuration.
 
 See [this file](https://github.com/Koihik/LuaFormatter/blob/master/docs/Style-Config.md)
 
-### Default configuration
+## Default configuration
 
 ```
 column_limit: 80
