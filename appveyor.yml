@@ -6,7 +6,8 @@ environment:
       vcvarsall_platform: "x86"
 
 before_build:
-  - git clone --depth 1 https://github.com/Koihik/LuaFormatter.git LuaFormatter
+  - ps: git clone --depth 1 https://github.com/Koihik/LuaFormatter.git LuaFormatter
+  - ps: git clone "https://$($env:GITHUB_TOKEN)@github.com/indiesoftby/defold-editor-script-lua-format.git" main-repo
   - cd %APPVEYOR_BUILD_FOLDER%\LuaFormatter
   - ps: $env:LF_GIT_TAG=$(git describe --tags --abbrev=0)
   - ps: $env:LF_GIT_HASH=$(git rev-parse --short HEAD)
@@ -25,7 +26,7 @@ deploy_script:
   - ps: git config --global user.email "$($env:GITHUB_EMAIL)"
   - ps: git config --global user.name "$($env:GITHUB_USERNAME)"
   - cd %APPVEYOR_BUILD_FOLDER%
-  - ps: git clone https://$($env:GITHUB_TOKEN)@github.com/indiesoftby/defold-editor-script-lua-format.git main-repo
+  - ps: git clone "https://$($env:GITHUB_TOKEN)@github.com/indiesoftby/defold-editor-script-lua-format.git" main-repo
   - cd main-repo
   - cp %APPVEYOR_BUILD_FOLDER%\LuaFormatter\Release\lua-format.exe editor-script-lua-format\bin\win32\lua-format.exe
   - git add editor-script-lua-format\bin\win32\lua-format.exe
