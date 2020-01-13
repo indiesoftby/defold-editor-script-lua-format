@@ -6,11 +6,11 @@ environment:
       vcvarsall_platform: "x86"
 
 before_build:
-  - ps: git clone --depth 1 https://github.com/Koihik/LuaFormatter.git LuaFormatter
-  - ps: git clone "https://$($env:GITHUB_TOKEN)@github.com/indiesoftby/defold-editor-script-lua-format.git" main-repo
+  - git clone --depth 1 https://github.com/Koihik/LuaFormatter.git LuaFormatter
   - cd %APPVEYOR_BUILD_FOLDER%\LuaFormatter
   - ps: $env:LF_GIT_TAG=$(git describe --tags --abbrev=0)
   - ps: $env:LF_GIT_HASH=$(git rev-parse --short HEAD)
+  - echo "Version %LF_GIT_TAG%-%LF_GIT_HASH%, user %GITHUB_USERNAME%, email %GITHUB_EMAIL%"
   - git submodule update --init
   - cmake . -G "Visual Studio 15 2017"
 
@@ -23,12 +23,12 @@ test_script:
   - lua-format-test.exe
 
 deploy_script:
-  - ps: git config --global user.email "$($env:GITHUB_EMAIL)"
-  - ps: git config --global user.name "$($env:GITHUB_USERNAME)"
+  - git config --global user.email "%GITHUB_EMAIL%"
+  - git config --global user.name "%GITHUB_USERNAME%"
   - cd %APPVEYOR_BUILD_FOLDER%
-  - ps: git clone "https://$($env:GITHUB_TOKEN)@github.com/indiesoftby/defold-editor-script-lua-format.git" main-repo
+  - git clone "https://%GITHUB_TOKEN%@github.com/indiesoftby/defold-editor-script-lua-format.git" main-repo
   - cd main-repo
   - cp %APPVEYOR_BUILD_FOLDER%\LuaFormatter\Release\lua-format.exe editor-script-lua-format\bin\win32\lua-format.exe
   - git add editor-script-lua-format\bin\win32\lua-format.exe
-  - ps: git commit -m "Update Windows build (version $($env:LF_GIT_TAG)-$($env:LF_GIT_HASH))"
+  - git commit -m "Update Windows build (version %LF_GIT_TAG%-%LF_GIT_HASH%)"
   - git push
