@@ -37,6 +37,8 @@ before_install:
   - export CXXFLAGS=${MYCXXFLAGS}
   - git clone --depth 1 https://github.com/Koihik/LuaFormatter.git
   - cd LuaFormatter
+  - export LF_GIT_TAG=$(git tag --sort=committerdate | tail -1)
+  - export LF_GIT_HASH=$(git rev-parse --short HEAD)
   - git submodule update --init
 
 install:
@@ -50,3 +52,23 @@ script:
   - cd ../Release
   - make -j 2
   - CTEST_OUTPUT_ON_FAILURE=1 ctest -j 2
+
+after_success:
+  - git config --global user.email "travis@travis-ci.org"
+  - git config --global user.name "Travis CI"
+  - git clone https://${GITHUB_TOKEN}@github.com/indiesoftby/defold-editor-script-lua-format.git ${TRAVIS_BUILD_DIR}/main-repo
+  - cd ${TRAVIS_BUILD_DIR}/main-repo
+  - if [[ $TRAVIS_OS_NAME == "linux" && $COMPILER == "g++-9" ]]; then
+      cp ${TRAVIS_BUILD_DIR}/LuaFormatter/Release/lua-format editor-script-lua-format/bin/linux/lua-format;
+      chmod +x editor-script-lua-format/bin/linux/lua-format;
+      git add editor-script-lua-format/bin/linux/lua-format;
+      git commit -m "Travis CI - Update Linux build ($LF_GIT_TAG-$LF_GIT_HASH)";
+      git push;
+    fi
+  - if [[ $TRAVIS_OS_NAME == "osx" && $TRAVIS_OSX_IMAGE == "xcode11" ]]; then
+      cp ${TRAVIS_BUILD_DIR}/LuaFormatter/Release/lua-format editor-script-lua-format/bin/darwin/lua-format;
+      chmod +x editor-script-lua-format/bin/darwin/lua-format;
+      git add editor-script-lua-format/bin/darwin/lua-format;
+      git commit -m "Travis CI - Update macOS build ($LF_GIT_TAG-$LF_GIT_HASH)";
+      git push;
+    fi
