@@ -54,8 +54,8 @@ script:
   - CTEST_OUTPUT_ON_FAILURE=1 ctest -j 2
 
 after_success:
-  - git config --global user.email "travis@travis-ci.org"
-  - git config --global user.name "Travis CI"
+  - git config --global user.email "${GITHUB_EMAIL}"
+  - git config --global user.name "${GITHUB_USERNAME}"
   - git clone https://${GITHUB_TOKEN}@github.com/indiesoftby/defold-editor-script-lua-format.git ${TRAVIS_BUILD_DIR}/main-repo
   - cd ${TRAVIS_BUILD_DIR}/main-repo
   - if [[ $TRAVIS_OS_NAME == "linux" && $COMPILER == "g++-9" ]]; then
