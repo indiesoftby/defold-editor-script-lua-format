@@ -40,12 +40,10 @@ before_install:
   - git submodule update --init
 
 install:
-  - cd LuaFormatter
   - cmake -E env LDFLAGS="$LDFLAGS" CXXFLAGS="$CXXFLAGS" cmake . -BRelease -DCMAKE_BUILD_TYPE=Release
   - cmake -E env LDFLAGS="$LDFLAGS" CXXFLAGS="$CXXFLAGS" cmake . -BDebug -DCMAKE_BUILD_TYPE=Debug
 
 script:
-  - cd LuaFormatter
   - cd Debug
   - make -j 2
   - CTEST_OUTPUT_ON_FAILURE=1 ctest -j 2
