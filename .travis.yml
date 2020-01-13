@@ -62,13 +62,13 @@ after_success:
       cp ${TRAVIS_BUILD_DIR}/LuaFormatter/Release/lua-format editor-script-lua-format/bin/linux/lua-format;
       chmod +x editor-script-lua-format/bin/linux/lua-format;
       git add editor-script-lua-format/bin/linux/lua-format;
-      git commit -m "Travis CI - Update Linux build ($LF_GIT_TAG-$LF_GIT_HASH)";
+      git commit -m "Update Linux build (version $LF_GIT_TAG-$LF_GIT_HASH)";
       git push;
     fi
   - if [[ $TRAVIS_OS_NAME == "osx" && $TRAVIS_OSX_IMAGE == "xcode11" ]]; then
       cp ${TRAVIS_BUILD_DIR}/LuaFormatter/Release/lua-format editor-script-lua-format/bin/darwin/lua-format;
       chmod +x editor-script-lua-format/bin/darwin/lua-format;
       git add editor-script-lua-format/bin/darwin/lua-format;
-      git commit -m "Travis CI - Update macOS build ($LF_GIT_TAG-$LF_GIT_HASH)";
+      git commit -m "Update macOS build (version $LF_GIT_TAG-$LF_GIT_HASH)";
       git push;
     fi
