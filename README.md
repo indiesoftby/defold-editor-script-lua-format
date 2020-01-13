@@ -1,5 +1,7 @@
 # Lua Code Formatter for Defold IDE
 
+[![Build Status](https://travis-ci.com/indiesoftby/defold-editor-script-lua-format.svg?branch=build-lua-format)](https://travis-ci.com/indiesoftby/defold-editor-script-lua-format) [![Build status](https://ci.appveyor.com/api/projects/status/bbo48o35tfhfj5t9/branch/build-lua-format?svg=true)](https://ci.appveyor.com/project/aglitchman/defold-editor-script-lua-format/branch/build-lua-format)
+
 [Defold IDE](https://www.defold.com) editor script that reformats your Lua source code. Uses [LuaFormatter](https://github.com/Koihik/LuaFormatter).
 
 ## Installation
