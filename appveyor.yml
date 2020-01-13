@@ -1,0 +1,36 @@
+environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      platform: "Win32"
+      configuration: "Release"
+      vcvarsall_platform: "x86"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      platform: "Win32"
+      configuration: "Debug"
+      vcvarsall_platform: "x86"
+
+before_build:
+  - git clone --depth 1 https://github.com/Koihik/LuaFormatter.git LuaFormatter
+  - cd %APPVEYOR_BUILD_FOLDER%\LuaFormatter
+  - $LF_GIT_TAG=$(git describe --tags --abbrev=0 )
+  - $LF_GIT_HASH=$(git rev-parse --short HEAD)
+  - git submodule update --init
+  - cmake . -G "Visual Studio 15 2017"
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%\LuaFormatter
+  - msbuild "lua-formatter.sln" /clp:ErrorsOnly /target:Build /property:Configuration="%configuration%";Platform=%platform% /m"
+
+test_script:
+  - cd %APPVEYOR_BUILD_FOLDER%\LuaFormatter\%configuration%
+  - lua-format-test.exe
+
+deploy_script:
+  - git config --global user.email "$($env:GITHUB_EMAIL)"
+  - git config --global user.name "$($env:GITHUB_USERNAME)"
+  - git clone https://$($env:GITHUB_TOKEN)@github.com/indiesoftby/defold-editor-script-lua-format.git %APPVEYOR_BUILD_FOLDER%\main-repo
+  - cd %APPVEYOR_BUILD_FOLDER%\main-repo
+  - cp %APPVEYOR_BUILD_FOLDER%\LuaFormatter\Release\lua-format.exe editor-script-lua-format\bin\win32\lua-format.exe
+  - git add editor-script-lua-format\bin\win32\lua-format.exe
+  - git commit -m "Update Windows build (version $LF_GIT_TAG-$LF_GIT_HASH)"
+  - git push
