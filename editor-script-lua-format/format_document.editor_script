@@ -14,6 +14,7 @@ function M.get_commands()
                 local path = editor.get(opts.selection, "path")
                 return ends_with(path, ".lua") or ends_with(path, ".script") or
                            ends_with(path, ".editor_script") or
+                           ends_with(path, ".gui_script") or
                            ends_with(path, ".render_script")
             end,
             run = function(opts)
