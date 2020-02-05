@@ -12,7 +12,7 @@
 
 **The script will work if you simply copy paste the script folder into your project.**
 
-This script is accessible through the context menu in the asset view, it's context sensitive and will only show when you are clicking on the relevant file - `.lua`, `.script`, `.render_script` or `.editor_script`.
+This script is accessible through the context menu in the asset view, it's context sensitive and will only show when you are clicking on the relevant file - `.lua`, `.script`, `.editor_script`, `.gui_script` or `.render_script`.
 
 ![](example.png)
 
