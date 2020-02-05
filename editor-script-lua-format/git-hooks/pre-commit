@@ -21,7 +21,7 @@ fi
 $LUA_FORMAT -h >/dev/null 2>&1 || { echo >&2 "This hook requires 'lua-format'. Aborting."; exit 1; }
 
 # Find Lua files
-FILES=$(git diff --cached --name-only --diff-filter=ACMR "*.lua" "*.script" "*.editor_script" "*.render_script" | sed 's| |\\ |g')
+FILES=$(git diff --cached --name-only --diff-filter=ACMR "*.lua" "*.script" "*.editor_script" "*.gui_script" "*.render_script" | sed 's| |\\ |g')
 [ -z "$FILES" ] && exit 0
 
 # Prettify all selected files
