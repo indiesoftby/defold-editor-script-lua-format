@@ -1,4 +1,4 @@
-Build and push latest `lua-format` binaries using Travis CI and AppVeyor.
+Scripts, that build and push the latest `lua-format` binaries using Travis CI and AppVeyor.
 
 Linux, macOS: 
 [![Build Status](https://travis-ci.com/indiesoftby/defold-editor-script-lua-format.svg?branch=build-lua-format)](https://travis-ci.com/indiesoftby/defold-editor-script-lua-format)
