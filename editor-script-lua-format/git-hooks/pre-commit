@@ -1,8 +1,8 @@
 #!/bin/sh
 # Copy contents of this sample pre-commit hook to the custom pre-commit
-# $ cp ./editor-script-lua-format/git-hooks/pre-commit ./git/hooks/pre-commit
+# $ cp ./editor-script-lua-format/git-hooks/pre-commit .git/hooks/pre-commit
 # Make the pre-commit script executable (only on Linux and macOS)
-# $ chmod +x ./git/hooks/pre-commit
+# $ chmod +x .git/hooks/pre-commit
 
 # Check for lua-format executable
 BIN_PATH=./editor-script-lua-format/bin
